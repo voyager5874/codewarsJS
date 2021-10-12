@@ -1,12 +1,10 @@
 function mergeArrays(a, b) {
   // your code here
-  const shortArray = a.length < b.length ? a : b;
-  const longArray = a.length > b.length ? a : b;
-  const shortArrayLength = shortArray.length;
+  const longArrayLength = a.length > b.length ? a.length : b.length;
   const mix = [];
-  for (let i = 0; i < shortArrayLength; i++) {
-    mix.push(a[i]);
-    mix.push(b[i]);
+  for (let i = 0; i < longArrayLength; i++) {
+    if (a[i]) mix.push(a[i]); //won't work for falsey values
+    if (b[i]) mix.push(b[i]);
   }
-  return [...mix, ...longArray.slice(shortArray.length)];
+  return mix;
 }
