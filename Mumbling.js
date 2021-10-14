@@ -3,8 +3,7 @@
 // accum("cwAt") -> "C-Ww-Aaa-Tttt"
 
 function accum(s) {
-  return s
-    .split("")
+  return Array.from(s)
     .map((c, i) => c.toUpperCase() + c.toLowerCase().repeat(i))
     .join("-");
 }
