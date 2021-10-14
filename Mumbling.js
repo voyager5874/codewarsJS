@@ -1,10 +1,10 @@
+// accum("abcd") -> "A-Bb-Ccc-Dddd"
+// accum("RqaEzty") -> "R-Qq-Aaa-Eeee-Zzzzz-Tttttt-Yyyyyyy"
+// accum("cwAt") -> "C-Ww-Aaa-Tttt"
+
 function accum(s) {
-  // your code
-  let result = "";
-  for (let i = 0; i < s.length; i++) {
-    result += s[i].toUpperCase();
-    result += s[i].toLowerCase().repeat(i);
-    if (i !== s.length - 1) result += "-";
-  }
-  return result;
+  return s
+    .split("")
+    .map((c, i) => c.toUpperCase() + c.toLowerCase().repeat(i))
+    .join("-");
 }
