@@ -7,28 +7,26 @@ function formatDuration(seconds) {
   }
   //Some magic
   const secondsInMinute = 60;
-  const secondsInHour = 60 * 60;
-  const secondsInDay = 24 * 60 * 60;
-  const secondsInYear = 365 * 24 * 60 * 60;
-  let sec = 1;
-  const inSeconds = [
-    secondsInYear,
-    secondsInDay,
-    secondsInHour,
-    secondsInMinute,
-    sec,
-  ];
-  const intervalNames = ["years", "days", "hours", "minutes", "seconds"];
+  const secondsInHour = 3600;
+  const secondsInDay = 86400;
+  const secondsInYear = 31536000;
 
   let rem = seconds;
 
   let res = {};
   let interval = [];
   let resString = "";
-  for (let i = 0; i < inSeconds.length; i++) {
-    res[intervalNames[i]] = Math.floor(rem / inSeconds[i]);
-    rem -= res[intervalNames[i]] * inSeconds[i];
-  }
+
+  res.years = Math.floor(rem / secondsInYear);
+  rem -= res.years * secondsInYear;
+  res.days = Math.floor(rem / secondsInDay);
+  rem -= res.days * secondsInDay;
+  res.hours = Math.floor(rem / secondsInHour);
+  rem -= res.hours * secondsInHour;
+  res.minutes = Math.floor(rem / secondsInMinute);
+  rem -= res.minutes * secondsInMinute;
+  res.seconds = rem;
+
   for (let key in res) {
     if (res[key] > 1) {
       interval.push(`${res[key]} ${key}`);
@@ -43,11 +41,8 @@ function formatDuration(seconds) {
     for (let i = 0; i < interval.length; i++) {
       if (i <= interval.length - 2) {
         resString += interval[i];
-      }
-      if (i < interval.length - 2) {
-        resString += ", ";
-      }
-      if (i > interval.length - 2) {
+        if (i < interval.length - 2) resString += ", ";
+      } else {
         resString += " and " + interval[i];
       }
     }
