@@ -1,46 +1,24 @@
-var coinCombo = function (amount) {
-  const INF = 100000;
+//How is this 7kyu ???
+//
+//https://www.codesdope.com/course/algorithms-coin-change/
 
-  //k is number of denominations of the coin or length of d
+// The function takes cents value (int) and needs to return the minimum number of coins combination of the same value.
 
-  const d = [1, 5, 10, 25];
-  const k = d.length;
-  let n = amount;
-  const resByValues = [];
+// The function should return an array where
+// coins[0] = pennies ==> $00.01
+// coins[1] = nickels ==> $00.05
+// coins[2] = dimes ==> $00.10
+// coins[3] = quarters ==> $00.25
 
-  const M = Array(0).fill(n + 1);
-  const S = Array(0).fill(n + 1);
+// So for example:
+// coinCombo(6) --> [1, 1, 0, 0]
 
-  for (let j = 1; j < n + 1; j++) {
-    let minimum = INF;
-    let coin = 0;
-
-    for (let i = 1; i < k + 1; i++) {
-      if (j >= d[i]) {
-        minimum = Math.min(minimum, 1 + M[j - d[i]]);
-        coin = i;
-      }
-    }
-    M[j] = minimum;
-    S[j] = coin;
+function coinCombo(cents) {
+  const coins = [1, 5, 10, 25];
+  const combo = [0, 0, 0, 0];
+  for (let i = 3; i >= 0 && cents > 0; i--) {
+    combo[i] = Math.floor(cents / coins[i]);
+    cents -= combo[i] * coins[i];
   }
-  let l = n;
-  while (l > 0) {
-    //console.log(d[S[l]]);
-    resByValues.push(d[S[l]]);
-
-    l = l - d[S[l]];
-  }
-  const resByCoinCount = [0, 0, 0, 0];
-  d.forEach((item, index) => {
-    resByValues.forEach((value) => {
-      if (value === item) {
-        console.log(resByCoinCount);
-        console.log(`${index} +1`);
-        resByCoinCount[index] += 1;
-        console.log(resByCoinCount);
-      }
-    });
-  });
-  return resByCoinCount;
-};
+  return combo;
+}
