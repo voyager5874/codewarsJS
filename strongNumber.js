@@ -6,7 +6,7 @@ function strong(n) {
   let sumOfFactorials = numbers
     .map((number) => {
       let factorial = number;
-      if (number === 0) {
+      if (number <= 1) {
         return 1;
       }
       while (number > 1) {
