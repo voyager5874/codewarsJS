@@ -1,12 +1,9 @@
 function minimumSteps(numbers, value) {
-  //your code here
-  let sum = 0;
-  let counter = 0;
-  while (sum < value) {
-    let min = Math.min(...numbers);
-    numbers.splice(numbers.indexOf(min), 1);
-    sum += min;
-    counter++;
+  const sortedNumbers = numbers.sort((a, b) => a - b); //sort() is not what you might think
+  for (let i = 0, sum = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+    if (sum >= value) {
+      return i;
+    }
   }
-  return counter - 1;
 }
