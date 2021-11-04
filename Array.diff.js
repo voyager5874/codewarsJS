@@ -1,8 +1,3 @@
-function arrayDiff(a, b) {
-  for (let i = 0; i < b.length; i++) {
-    while (a.indexOf(b[i]) !== -1) {
-      a.splice(a.indexOf(b[i]), 1);
-    }
-  }
-  return a;
+function array_diff(a, b) {
+  return a.filter((e) => !b.includes(e));
 }
