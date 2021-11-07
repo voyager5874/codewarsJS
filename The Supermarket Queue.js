@@ -1,33 +1,21 @@
 function queueTime(customers, n) {
-  if (n === 1)
-    return customers.reduce((total, current) => {
-      return total + current;
-    }, 0);
-  if (customers.length === 0) return 0;
-  if (customers.length < n) return Math.max(...customers);
-  let sameTimeCheck = true;
-  for (let i = 0; i < customers.length; i += n) {
-    if (!customers.slice(i, i + n).every((item) => item === item[0])) {
-      sameTimeCheck = false;
-      break;
-    }
+  // Make an array containing n amount of elements,
+  // n representing the number of tills,
+  // and fill with zeroes
+  var tills = new Array(n).fill(0);
+
+  // Iterate through the customers
+  for (let time of customers) {
+    // Find the till that has the least time
+    let idx = tills.indexOf(Math.min(...tills));
+
+    // Add the time, representing the customer to
+    // the till that has the least time
+    tills[idx] += time;
   }
-  if (sameTimeCheck) {
-    return (
-      customers.reduce((total, current) => {
-        return total + current;
-      }, 0) / n
-    );
-  }
-  let tills = customers.slice(0, n);
-  const res = tills.slice();
-  for (let i = n; i < customers.length; i++) {
-    while (!tills.some((item) => item === 0)) {
-      tills = tills.map((item) => (item -= 1));
-    }
-    let freeTill = tills.indexOf(0);
-    res[freeTill] += customers[i];
-    tills[freeTill] = customers[i];
-  }
-  return Math.max(...res);
+
+  // Return the till that has the longest wait time
+  // This is the required time to get all customers
+  // through the que.
+  return Math.max(...tills);
 }
