@@ -10,8 +10,7 @@ function orderWeight(input) {
   }));
   processedArray.sort((a, b) => {
     if (a.sum - b.sum === 0) {
-      if (a.raw > b.raw) return 1;
-      if (a.raw < b.raw) return -1;
+      return a.raw > b.raw ? 1 : -1;
     }
     return a.sum - b.sum;
   });
